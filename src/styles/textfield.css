@@ -1,0 +1,14 @@
+.tf-small{
+    font-size: 13px;
+    padding: 4px 6px;
+}
+
+.tf-normal{
+    font-size: 15px;
+    padding: 6px 8px;
+}
+
+.tf-large{
+    font-size: 17px;
+    padding: 8px 10px;
+}
