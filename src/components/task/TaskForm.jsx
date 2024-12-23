@@ -7,34 +7,16 @@ import SelectList from "../ui/SelectList";
 import Button from "../ui/Button";
 import DatePicker from "../ui/DatePicker";
 import PropTypes from 'prop-types';
-import { useTasks } from "../../contexts/TaskProvider";
-import { useEffect } from "react";
+import { priorities, statuses } from "../../utils/constants";
 
-export default function TaskForm({task, onSuccess}) {
-    const {addTask, editTask} = useTasks();
-    const priorities = [
-        { value: 'Low', label: 'Low' },
-        { value: 'Normal', label: 'Normal' },
-        { value: 'High', label: 'High' }
-    ];
-    const statuses = [
-        {value: 'To do', label: 'To do'},
-        {value: 'In progress', label: 'In progess'},
-        {value: 'Done', label: 'Done'},
-        {value: 'Cancelled', label: 'Cancelled'}
-    ]
-
+export default function TaskForm({task, onSubmit}) {
     const initialValues = task || {
         title: '',
         description: '',
-        status: statuses[0].value,
-        priority: priorities[0].value,
+        status: statuses[0],
+        priority: priorities[0],
         due_date: ''
     }
-
-    useEffect(() => {
-        console.log(task);
-    }, [task]);
 
   return (
     <div>
@@ -47,26 +29,9 @@ export default function TaskForm({task, onSuccess}) {
                 priority: Yup.string().required('Please select a priority'),
                 due_date: Yup.date('Please select a due date')
             })}
-            onSubmit={async(values, {resetForm}) => {
-                try{
-                    let result;
-                    /* eslint-disable no-unused-vars */
-                        const {id, ...data} = values;
-                    /* eslint-disable no-unused-vars */
-                    if(task){
-                        result = await editTask(task.id, data);
-                    }
-                    else{
-                        result = await addTask(data);
-                    }
-                    if(result.success){
-                        onSuccess();
-                        resetForm();
-                    }
-                    
-                }catch(error){
-                    console.log(error);
-                }
+            onSubmit={(values, {resetForm}) => {
+                onSubmit(task?.id ? {id: task.id, ...values} : values);
+                resetForm();
             }}
         >
             {({values, handleChange, errors, touched, handleSubmit, setFieldValue}) => (
@@ -114,6 +79,7 @@ export default function TaskForm({task, onSuccess}) {
                                     onChange={(date) => setFieldValue("due_date", date)}
                                     dateFormat={"dd/MM/yyyy"}
                                     className={'w-full'}
+                                    minDate={new Date()}
                                     errorMessage={touched.priority && errors.priority}
                                 />
                             </div>
@@ -130,6 +96,6 @@ export default function TaskForm({task, onSuccess}) {
 }
 
 TaskForm.propTypes = {
-    onSuccess: PropTypes.func,
+    onSubmit: PropTypes.func,
     task: PropTypes.any
 }
