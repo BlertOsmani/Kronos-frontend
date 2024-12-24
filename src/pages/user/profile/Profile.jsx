@@ -3,16 +3,18 @@ import Image from "../../../components/ui/Image";
 import Button from "../../../components/ui/Button";
 import { LogOut } from "lucide-react";
 import ProfileForm from "../../../components/user/profile/ProfileForm";
-import { useUser } from "../../../hooks/useUser";
 import { logout } from "../../../services/userService";
+import { useUser } from "../../../contexts/UserProvider";
+import Security from "../../../components/user/profile/Security";
+import Account from "../../../components/user/profile/Account";
 
 export default function Profile() {   
     const {user, fetchUserFromLocalStorage} = useUser(); 
 
-
     const tabs = [
         {label: "Overview", content: <ProfileForm onSuccess={() => fetchUserFromLocalStorage()} user={user}/>},
-        {label: "Account", content: ''}
+        {label: 'Account', content: <Account/>},
+        {label: "Security", content: <Security/>}
     ]
 
     

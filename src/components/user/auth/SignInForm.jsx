@@ -8,10 +8,12 @@ import { useState } from 'react'
 import Message from '../../ui/Message'
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom'
+import { useUser } from '../../../contexts/UserProvider'
 
 export default function SignInForm() {
     const [incorrectCredentials, setIncorrectCredentials] = useState(null);
     const navigate = useNavigate();
+    const {updateUserInLocalStorage} = useUser();
   return (
     <div>
         <Formik
@@ -29,7 +31,7 @@ export default function SignInForm() {
                         setIncorrectCredentials(null);
                         localStorage.setItem('access_token', response.data.access);
                         localStorage.setItem('refresh_token', response.data.refresh);
-                        localStorage.setItem('user', JSON.stringify(response.data.user));
+                        updateUserInLocalStorage(response.data.user);
                         navigate('/');
                     }else if(response.status === 401) {
                         setIncorrectCredentials(response.data.detail);

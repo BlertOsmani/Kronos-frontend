@@ -8,9 +8,11 @@ import TaskForm from "../../components/task/TaskForm";
 import ConfirmDialog from "../../components/ui/ConfirmDialog";
 import { createTask, deleteTask, getTasks, updateTask } from "../../services/taskService";
 import { useEffect, useState } from "react";
+import { useToast } from "../../contexts/ToastProvider";
 
 export default function Tasks() {
   const {dialog, closeDialog, openDialog} = useDialog();
+  const {showToast} = useToast();
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
@@ -29,6 +31,7 @@ export default function Tasks() {
     try {
       const response = await createTask(data);
       if (response.status === 201) {
+        showToast("Task added successfully", "success");
         fetchTasks();
         closeDialog();
       }
@@ -41,6 +44,7 @@ export default function Tasks() {
     try {
       const response = await updateTask(id, data);
       if (response.status === 200) {
+        showToast("Task updated successfully", "success");
         fetchTasks();
         closeDialog();
       }
@@ -53,6 +57,7 @@ export default function Tasks() {
     try{
       const response = await deleteTask(id);
       if(response.status === 204){
+        showToast("Task deleted successfully", "success");
         fetchTasks();
         closeDialog();
       }

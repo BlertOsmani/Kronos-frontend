@@ -5,8 +5,10 @@ import TieredMenu from "./TieredMenu";
 import { logout } from "../../services/userService";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { useUser } from "../../contexts/UserProvider";
 
 export default function Navbar() {
+  const {user} = useUser();
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -23,10 +25,7 @@ export default function Navbar() {
       }
     }
   ]
-
-
-
-
+  
   return (
     <div className="flex container items-center m-auto py-5 justify-between">
         <div className="flex items-center gap-5 w-8/12">
@@ -48,8 +47,8 @@ export default function Navbar() {
             <div className="flex gap-1 items-center">
                 <Image width={"40"} height={"40"} className={'rounded-full'} src={'https://lh4.googleusercontent.com/proxy/4sU5GLPHxSBdB1vNpeQxeYTVBAhuX84OZl4YeICLOg147K_jZLcPU6uOJEUrM-7eEssytzw9c-71x9XqRFdsvBYAWWnYLwq3PuaTxyH1AL-2GdBUhWPtz4XM'}/>
                 <div className="flex flex-col text-start">
-                  <span>{test.first_name} {test.last_name}</span>
-                  <span className="text-xs text-gray-500">{test.username}</span>
+                  <span>{user.first_name} {user.last_name}</span>
+                  <span className="text-xs text-gray-500">{user.username}</span>
                 </div>
             </div>
             </Button>

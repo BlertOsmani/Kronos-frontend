@@ -12,13 +12,13 @@ export default function UserProvider({children}) {
         setUser(stored_user);
     }
 
-    function updateUserFromLocalStorage(new_user){
+    function updateUserInLocalStorage(new_user){
         setUser(new_user);
         localStorage.setItem('user', JSON.stringify(new_user));
     }
 
   return (
-    <UserContext.Provider value={{user, fetchUserFromLocalStorage, updateUserFromLocalStorage}}>
+    <UserContext.Provider value={{user, fetchUserFromLocalStorage, updateUserInLocalStorage}}>
         {children}
     </UserContext.Provider>
   )

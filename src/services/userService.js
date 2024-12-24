@@ -56,3 +56,24 @@ export async function updateProfile(id, data){
         return error.response;
     }
 }
+
+export async function deleteAccount(id){
+    try{
+        const request = await axiosInstance.delete(`users/${id}/`);
+        if(request.status === 204){
+            await logout();
+            window.location.href = '/register';
+        }
+    }catch(error){
+        return error.response;
+    }
+}
+
+export async function changePassword(data){
+    try{
+        const request = await axiosInstance.put('users/change-password/', data);
+        return request;
+    }catch(error){
+        return error.response;
+    }
+}

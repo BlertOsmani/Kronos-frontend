@@ -7,13 +7,14 @@ export default function Button({disabled, type, onClick, iconPosition = 'right',
         success: 'bg-emerald-500 text-white hover:bg-emerald-600',
         white: 'bg-[#ffffff] text-black hover:bg-neutral-100',
         error: 'bg-red-500 text-white hover:bg-red-600',
+        'error-outline': 'bg-red-100 text-red-600 hover:bg-red-100',
         disabled: 'bg-neutral-100 text-neutral-500'
     }
 
     const sizeClass = {
         xs: 'text-[10px] p-[2px]',
         sm: 'text-[13px] p-[6px]',
-        md: 'text-[15px] p-[8px]',
+        md: 'text-[14px] p-[8px]',
         lg: 'text-[17px] p-[10px]',
     }
 
@@ -41,7 +42,7 @@ Button.propTypes = {
     title: PropTypes.string,
     className: PropTypes.string,
     type: PropTypes.string,
-    severity: PropTypes.oneOf(['primary', 'secondary', 'success', 'white']),
+    severity: PropTypes.oneOf(['primary', 'secondary', 'success', 'white', 'disabled', 'error-outline']),
     size: PropTypes.oneOf(['sm', 'md', 'lg', 'xs']),
     rounded: PropTypes.bool,
     children: PropTypes.node,

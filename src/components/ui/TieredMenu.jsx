@@ -56,7 +56,7 @@ function TieredMenuItem({ item, onClose }) {
   };
 
   return (
-    <li className="relative group">
+    <li className="relative z-50 group">
       {/* Parent menu item */}
       <div
         className={`flex justify-between items-center pl-4 pr-2 rounded text-sm py-2 text-gray-600 cursor-pointer hover:bg-neutral-100 ${item.className}`}
